@@ -67,6 +67,17 @@ module LLC
 end
 
 if $0 == __FILE__
+  ARGV.each do |a|
+    if a == '--ast'
+      ARGV.delete(a)
+      p LLC.parse(ARGF.read)
+      exit
+    elsif a == '-S'
+      ARGV.delete(a)
+      puts LLC.compile(LLC.parse(ARGF.read))
+      exit
+    end
+  end
   require 'tempfile'
   ast = LLC.parse ARGF.read
   as_code = LLC.compile(ast)
